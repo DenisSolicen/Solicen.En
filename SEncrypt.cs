@@ -5,7 +5,17 @@ namespace Solicen
 {
     class SEncrypt
     {
-        private static int KeyOffset = 120;
+        /// <summary>
+        /// Конкретное смещение напрямую в файле
+        /// </summary>
+        private static int KeyOffset = 60;
+
+        /// <summary>
+        /// Возвращает повторяющийся ключ в строке
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
         private int GetRepeatKey(string s, int n)
         {
             var r = s;
@@ -16,6 +26,10 @@ namespace Solicen
             return r.Substring(0, n).Length;
         }
 
+        /// <summary>
+        /// Реализует зашифровку файла по пути файла
+        /// </summary>
+        /// <param name="FileToEncrypt">Путь до файла который нужно зашифровать</param>
         public static void Encrypt(string FileToEncrypt)
         {
             try
@@ -35,6 +49,34 @@ namespace Solicen
             }
         }
 
+        /// <summary>
+        /// Реализует шифрование файла с конкретным смещением по пути файла
+        /// </summary>
+        /// <param name="FileToEncrypt">Файл который нужно зашифровать</param>
+        /// <param name="offset">Смещение байтов</param>
+        public static void EncryptWithOffset(string FileToEncrypt, int offset)
+        {
+            try
+            {
+                var file = File.ReadAllBytes(FileToEncrypt);
+                List<byte> newByte = new List<byte>();
+                foreach (var bytes in file)
+                {
+                    newByte.Add((byte)(bytes + offset));
+                }
+                File.Delete(FileToEncrypt);
+                File.WriteAllBytes(FileToEncrypt, newByte.ToArray());
+            }
+            catch
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// Реализует расшифровку файла по пути файла
+        /// </summary>
+        /// <param name="FileToDecrypt">Путь до файла который нужно расшифровать</param>
         public static void Decrypt(string FileToDecrypt)
         {
             try
@@ -54,6 +96,11 @@ namespace Solicen
             }
         }
 
+        /// <summary>
+        /// Реализует расшифровку файла по пути файла с конкретным смещением
+        /// </summary>
+        /// <param name="FileToDecrypt">Файл который нужно расшифровать</param>
+        /// <param name="offset">Смещение байтов</param>
         public static void DecryptWithOffset(string FileToDecrypt, int offset)
         {
             try
@@ -74,6 +121,12 @@ namespace Solicen
 
         }
 
+        /// <summary>
+        /// Возвращает файл как расшифрованную строку, через конкретное смещение по пути файла
+        /// </summary>
+        /// <param name="FileToDecrypt">Файл который нужно расшифровать</param>
+        /// <param name="offset">Смещение байтов</param>
+        /// <returns></returns>
         public static string DecryptToStringWithOffset(string FileToDecrypt, int offset)
         {
             try
