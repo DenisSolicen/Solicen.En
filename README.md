@@ -1,6 +1,6 @@
 # Solicen.SEncrypt
 
-#### Русский | [English](https://github.com/DenisSolicen/Solicen.SEncrypt/README-EN.md)
+#### Русский | [English](https://github.com/DenisSolicen/Solicen.SEncrypt/blob/main/README-EN.md)
 
 ## На русском
 * Класс для реализации простого шифрования файла
